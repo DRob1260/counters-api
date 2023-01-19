@@ -9,7 +9,7 @@ import {
 import { globalIdField, connectionArgs } from "graphql-relay";
 import { NodeField, NodeInterface, NodesField } from "./NodeInterface";
 import { ICounter } from "./types";
-import { getCounterById } from "./processor/counterProcessor";
+import { getCounterAdditionCountByCounterId, getCounterById } from "./processor/counterProcessor";
 
 export const VisibilityEnumType = new GraphQLEnumType({
     name: "CounterVisibility",
@@ -33,22 +33,22 @@ export const CounterType = new GraphQLObjectType<ICounter>({
             type: GraphQLString,
             resolve: ({ description }) => description
         },
-        count: {
-            type: new GraphQLNonNull(GraphQLInt),
-            resolve: ({ count }) => count
-        },
         visibility: {
-            type: VisibilityEnumType,
+            type: new GraphQLNonNull(VisibilityEnumType),
             resolve: ({ visibility }) => visibility
         },
         createdTimestamp: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             resolve: ({ createdTimestamp }) => createdTimestamp
         },
         updatedTimestamp: {
-            type: GraphQLString,
+            type: new GraphQLNonNull(GraphQLString),
             resolve: ({ updatedTimestamp }) => updatedTimestamp
-        }
+        },
+        count: {
+            type: new GraphQLNonNull(GraphQLInt),
+            resolve: ({ id }) => getCounterAdditionCountByCounterId(id)
+        },
     }),
     interfaces: () => [NodeInterface]
 });

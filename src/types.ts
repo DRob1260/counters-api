@@ -8,7 +8,6 @@ export class ICounter {
     id: string;
     name: string;
     description: string;
-    count: number;
     visibility: CounterVisibilityEnum;
     createdTimestamp: string;
     updatedTimestamp: string;
@@ -17,7 +16,6 @@ export class ICounter {
         this.id = data.id;
         this.name = data.name;
         this.description = data.description;
-        this.count = data.count;
         this.visibility = data.visibility;
         this.createdTimestamp = data.createdTimestamp;
         this.updatedTimestamp = data.updatedTimestamp;
